@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style type="text/css">
+            
+        </style>
+        <script type="text/javascript" src="jcool-1.2.0.js"></script>
+    </head>
+    <body>  
+        <button id='addli'>添加li</button>
+        <div id="list1">
+            <ul id="ul">
+                <li>第一名</li>
+                <li>第二名</li>
+                <li>第三名</li>
+                <li>第四名</li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+        /**
+         * 在DOM操作里，createElement是创建一个新的节点，createDocumentFragment是创建一个文档片段。
+         * 网上可以搜到的大部分都是说使用createDocumentFragment主要是因为避免因createElement多次添加到document.body引起的效率问题
+         */
+
+            //写入框架后
+             $$.delegate('ul','onclick','li',function(){
+                    this.style.color='white'
+                    this.style.background='blue'
+                })
+             /*****添加动态元素*****/
+             //createDocumentFragment
+            $$.click("addli", function(){
+                   var fragment = document.createDocumentFragment();  
+                   var li = document.createElement('li');  
+                    li.className = "xxx";  
+                    li.innerHTML='h1'
+                    fragment.appendChild(li);    
+                    
+                $$.$id('ul').appendChild(fragment);  
+            })
+            //createElement
+            $$.click("addli", function(){
+                   var li = document.createElement('li');  
+                    li.className = "xxx";  
+                    li.innerHTML='h2'
+                $$.$id('ul').appendChild(li);  
+            })
+
+            /*******委托写入框架前*********/
+             /**
+             @para parentId 包裹容器的id
+             @para selector 容器内元素的选择器，支持id和className
+             @para fn 元素上要执行的函数
+             */
+            // function delegate(pid, eventType, selector, fn) {
+            //     //参数处理
+            //     var parent = $$.$id(pid);
+            //     function handle(e){
+            //         var target = $$.getTarget(e);
+            //         console.log(target.nodeName+":nodeName")
+            //         if(target.nodeName.toLowerCase()=== selector || target.id === selector || target.className.indexOf(selector) != -1){
+            //             // 在事件冒泡的时候，回以此遍历每个子孙后代，如果找到对应的元素，则执行如下函数
+            //             // 为什么使用call，因为call可以改变this指向
+            //             // 大家还记得，函数中的this默认指向window，而我们希望指向当前dom元素本身
+            //             fn.call(target);
+            //         }
+            //     }
+            //     //当我们给父亲元素绑定一个事件，他的执行顺序：先捕获到目标元素，然后事件再冒泡
+            //     //这里是是给元素对象绑定一个事件
+                 
+            //     parent[eventType]=handle;
+            // }
+
+            // delegate('ul','onclick','li',function(){
+            //     this.style.color='white'
+            //     this.style.background='blue'
+            // })
+        </script>
+    </body>
+</html>

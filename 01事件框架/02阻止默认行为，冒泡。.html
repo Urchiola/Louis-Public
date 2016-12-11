@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style type="text/css">
+            #did{background:blue;width:100px;height:100px;}
+            #box{width:200px ;height:150px ;background:yellow;margin-top: 30px;padding-top: 50px;}
+            #box1{width:100px ;height:100px ;background:red;margin:0 auto;}
+        </style>
+        <script type="text/javascript" src="jcool-1.2.0.js"></script>
+    </head>
+    <body>  
+        <div id='did'></div>
+        <div id='box'>
+            <div id="box1"></div>
+        </div>
+        <script type="text/javascript">
+
+        /****************************************阻止默认行为*****************************************/
+        var did= $$.$id('did')
+        $$.click('did',function(e){
+            //阻止默认行为 标准写法
+            //preventDefault(e)
+            //封装到框架中后
+            //preventDefault(e)
+           
+            //4//封装到框架中后
+            $$.getTarget(e).style.background='green'
+        })
+
+        //兼容做法
+        function preventDefault(event){
+            var event= $$.getEvent(event);
+            if(event.preventDefault){
+                //默认行为
+                event.preventDefault();
+            }else{
+                //兼容ie 
+                event.returnValue =false
+            }
+        }
+
+
+        /**********************************阻止冒泡**********************************/
+
+        $$.click('box',function(e){
+            
+            alert('大盒子触发')
+
+            //1  e.stopPropagation()
+            //2写进框架
+            $$.stopPropagation(e)  
+
+        })
+        $$.click('box1',function(e){
+
+            alert('小盒子触发')
+            //标准
+            //e.stopPropagation()
+            //微软id
+            //e.cancelBubble=true
+            
+
+            //写进框架后
+              $$.stopPropagation(e)  
+
+            
+        })
+    </script>
+    </body>
+    
+</html>
